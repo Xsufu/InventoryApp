@@ -47,6 +47,22 @@ class InventoryViewModel(private val itemDao: ItemDao): ViewModel(){
         val newItem = getNewItemEntry(itemName, itemPrice, itemCount)
         insertItem(newItem)
     }
+
+    /**
+     * Проверка на заполенность полей
+     *
+     * @param itemName название товара
+     * @param itemPrice стоимость товара
+     * @param itemCount доступное на складе количество
+     *
+     * @return true если все поля заполнены, иначе false
+     */
+    fun isEntryValid(itemName: String, itemPrice: String, itemCount: String): Boolean {
+        if (itemName.isBlank() || itemPrice.isBlank() || itemCount.isBlank()) {
+            return false
+        }
+        return true
+    }
 }
 
 class InventoryViewModelFactory(private val itemDao: ItemDao): ViewModelProvider.Factory {

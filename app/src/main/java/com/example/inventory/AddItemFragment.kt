@@ -60,6 +60,42 @@ class AddItemFragment : Fragment() {
     }
 
     /**
+     * Привязка прослушки нажатия на кнопку добавления
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.saveAction.setOnClickListener {
+            addNewItem()
+        }
+    }
+
+    /**
+     * Вызов функции на проверку заполненности полей из ViewModel
+     */
+    private fun isEntryValid(): Boolean {
+        return viewModel.isEntryValid(
+            binding.itemName.text.toString(),
+            binding.itemPrice.text.toString(),
+            binding.itemCount.text.toString()
+        )
+    }
+
+    /**
+     * Добавление нового объекта в БД
+     */
+    private fun addNewItem() {
+        if (isEntryValid()) {
+            viewModel.addNewItem(
+                binding.itemName.text.toString(),
+                binding.itemPrice.text.toString(),
+                binding.itemCount.text.toString()
+            )
+            val action = AddItemFragmentDirections.actionAddItemFragmentToItemListFragment()
+            findNavController().navigate(action)
+        }
+    }
+
+    /**
      * Called before fragment is destroyed.
      */
     override fun onDestroyView() {

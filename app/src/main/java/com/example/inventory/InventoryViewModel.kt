@@ -119,6 +119,48 @@ class InventoryViewModel(private val itemDao: ItemDao): ViewModel(){
             itemDao.delete(item)
         }
     }
+
+    /**
+     *  Получение новго экземпляра класса Item
+     *
+     * @param itemId ID товара
+     * @param itemName название товара
+     * @param itemPrice стоимость товара
+     * @param itemCount доступное на складе количество
+     *
+     * @return экземпляр класса [Item] с заданными параметрами
+     */
+    private fun getUpdatedItemEntry(
+        itemId: Int,
+        itemName: String,
+        itemPrice: String,
+        itemCount: String
+    ): Item {
+        return Item(
+            Id = itemId,
+            itemName = itemName,
+            itemPrice = itemPrice.toDouble(),
+            quantityInStock = itemCount.toInt()
+        )
+    }
+
+    /**
+     * Вызов функции с запросом на обновление товара
+     *
+     * @param itemId ID товара
+     * @param itemName название товара
+     * @param itemPrice стоимость товара
+     * @param itemCount доступное на складе количество
+     */
+    fun updateItem(
+        itemId: Int,
+        itemName: String,
+        itemPrice: String,
+        itemCount: String
+    ) {
+        val updatedItem = getUpdatedItemEntry(itemId, itemName, itemPrice, itemCount)
+        updateItem(updatedItem)
+    }
 }
 
 class InventoryViewModelFactory(private val itemDao: ItemDao): ViewModelProvider.Factory {

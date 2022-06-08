@@ -75,6 +75,29 @@ class InventoryViewModel(private val itemDao: ItemDao): ViewModel(){
     fun retrieveItem(id: Int): LiveData<Item> {
         return itemDao.getItem(id).asLiveData()
     }
+
+    /**
+     * Вызов запроса на обновление
+     *
+     * @param item обновляемый объект
+     */
+    private fun updateItem(item: Item) {
+        viewModelScope.launch {
+            itemDao.update(item)
+        }
+    }
+
+    /**
+     * Продажа одного товара и обновление таблицы
+     *
+     * @param item продаваемый товар
+     */
+    fun sellItem(item: Item) {
+        if (item.quantityInStock > 0) {
+            val newItem = item.copy(quantityInStock = item.quantityInStock - 1)
+            updateItem(newItem)
+        }
+    }
 }
 
 class InventoryViewModelFactory(private val itemDao: ItemDao): ViewModelProvider.Factory {

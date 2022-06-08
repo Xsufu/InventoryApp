@@ -98,6 +98,16 @@ class InventoryViewModel(private val itemDao: ItemDao): ViewModel(){
             updateItem(newItem)
         }
     }
+
+    /**
+     * Проверка на наличие товара в наличии
+     *
+     * @param item проверяемый товар
+     * @return true если товар в наличии, иначе false
+     */
+    fun isStockAvailable(item: Item): Boolean {
+        return (item.quantityInStock > 0)
+    }
 }
 
 class InventoryViewModelFactory(private val itemDao: ItemDao): ViewModelProvider.Factory {

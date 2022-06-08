@@ -108,6 +108,17 @@ class InventoryViewModel(private val itemDao: ItemDao): ViewModel(){
     fun isStockAvailable(item: Item): Boolean {
         return (item.quantityInStock > 0)
     }
+
+    /**
+     * Вызов запроса на удаление товара из БД
+     *
+     * @param item удаляемый товар
+     */
+    fun deleteItem(item: Item) {
+        viewModelScope.launch {
+            itemDao.delete(item)
+        }
+    }
 }
 
 class InventoryViewModelFactory(private val itemDao: ItemDao): ViewModelProvider.Factory {

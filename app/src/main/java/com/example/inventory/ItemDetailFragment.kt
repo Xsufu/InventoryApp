@@ -47,6 +47,14 @@ class ItemDetailFragment : Fragment() {
 
     lateinit var item: Item
 
+    private fun editItem() {
+        val action = ItemDetailFragmentDirections.actionItemDetailFragmentToAddItemFragment(
+            getString(R.string.edit_fragment_title),
+            item.Id
+        )
+        this.findNavController().navigate(action)
+    }
+
     private fun bind(item: Item) {
         binding.apply {
             binding.itemName.text = item.itemName
@@ -57,6 +65,8 @@ class ItemDetailFragment : Fragment() {
             sellItem.setOnClickListener { viewModel.sellItem(item) }
 
             deleteItem.setOnClickListener { showConfirmationDialog() }
+
+            editItem.setOnClickListener { editItem() }
         }
     }
 

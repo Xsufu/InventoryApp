@@ -1,13 +1,15 @@
 package com.example.inventory
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.inventory.data.Item
 import com.example.inventory.data.ItemDao
 import kotlinx.coroutines.launch
 
 class InventoryViewModel(private val itemDao: ItemDao): ViewModel(){
+
+    //Получение всех товаров в качестве LiveData списка
+    val allItems: LiveData<List<Item>> = itemDao.getItems().asLiveData()
+
     /**
      * Обращение к DAO для добавления объекта в БД
      *
